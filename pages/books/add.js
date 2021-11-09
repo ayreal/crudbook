@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import { AddBookForm } from '../../components/AddBookForm';
-import { Heading } from '../../components/ui';
+import { Header, Heading, IconButton } from '../../components/ui';
 
 export default function AddBook() {
   return (
     <>
-      <Heading>Add a new book</Heading>
+      <Header>
+        <Heading>Add a new book</Heading>
+        <Link href="/">
+          <IconButton>
+            <span className="material-icons">clear</span>
+          </IconButton>
+        </Link>
+      </Header>
       <main>
         <AddBookForm />
-        <h2>
-          <Link href="/">
-            <a>Back to home</a>
-          </Link>
-        </h2>
       </main>
     </>
   );

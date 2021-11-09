@@ -53,4 +53,44 @@ const IconButton = styled.button`
   }
 `;
 
-export { PageContainer, Header, Heading, Button, IconButton };
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  height: 32px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid;
+  border-radius: 4px;
+`;
+
+const Textarea = styled.textarea`
+  height: 89px;
+  background: #fff;
+  padding: 8px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: none;
+`;
+
+const Label = styled.label`
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: bold;
+  margin-bottom: 9px;
+`;
+
+export {
+  PageContainer,
+  Header,
+  Heading,
+  Button,
+  IconButton,
+  InputGroup,
+  Input,
+  Textarea,
+  Label,
+};
