@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import styled from 'styled-components';
 import { getBooks, deleteBook } from '../datasource';
 import { BookCard } from '../components/BookCard';
-import { Heading, Button } from '../components/ui';
+import { Header, Heading, Button } from '../components/ui';
+
+const BooksList = styled.ul`
+  list-style-type: none;
+  padding: unset;
+  margin: unset;
+`;
 
 export default function Home() {
   const [books, setBooks] = useState([]);
@@ -22,17 +29,19 @@ export default function Home() {
 
   return (
     <>
-      <Heading>Bookshelf</Heading>
-      <Link href="/books/add">
-        <Button>Add Book</Button>
-      </Link>
+      <Header>
+        <Heading>Bookshelf</Heading>
+        <Link href="/books/add">
+          <Button role="link">Add Book</Button>
+        </Link>
+      </Header>
       <main>
         {books.length > 0 ? (
-          <ul>
+          <BooksList>
             {books.map((book) => (
               <BookCard key={book.id} handleDelete={handleDelete} {...book} />
             ))}
-          </ul>
+          </BooksList>
         ) : (
           <pre>Loading</pre>
         )}
