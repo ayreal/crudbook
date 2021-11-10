@@ -18,9 +18,17 @@ const Wrapper = styled.li`
 `;
 
 const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 182px;
+  min-height: 188px;
   img {
     width: 100%;
+  }
+  & > .material-icons {
+    color: #929292;
+    width: 22px;
   }
 `;
 
@@ -73,17 +81,20 @@ export const BookCard = ({
   return (
     <Wrapper>
       <ImageWrapper>
-        <img
-          src={imageUrl ?? <span className="material-icons">image</span>}
-          alt=""
-        />
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} />
+        ) : (
+          <span className="material-icons" alt="No image found">
+            image
+          </span>
+        )}
       </ImageWrapper>
       <Content>
         <Title>{title ?? 'Untitled'}</Title>
         <Author>{author ?? 'Author Unknown'}</Author>
         <Description>{description ?? '(No description)'}</Description>
       </Content>
-      <IconButton onClick={() => handleDelete(id)}>
+      <IconButton onClick={() => handleDelete(id)} alt="Delete">
         <span className="material-icons">delete</span>
       </IconButton>
     </Wrapper>

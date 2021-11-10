@@ -49,7 +49,7 @@ const IconButton = styled.button`
   background: transparent;
   & > .material-icons {
     color: #929292;
-    width: 22px;
+    width: 21px;
   }
 `;
 

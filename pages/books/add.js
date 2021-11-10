@@ -7,8 +7,8 @@ export default function AddBook() {
     <>
       <Header>
         <Heading>Add a new book</Heading>
-        <Link href="/">
-          <IconButton>
+        <Link href="/" passHref>
+          <IconButton alt="Back to home">
             <span className="material-icons">clear</span>
           </IconButton>
         </Link>

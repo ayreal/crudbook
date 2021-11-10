@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { addBook } from '../datasource';
 import { Button, InputGroup, Input, Textarea, Label } from './ui';
-import { useRouter } from 'next/dist/client/router';
 
 const VALID_URL_PATTERN =
   /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
@@ -18,11 +18,12 @@ const ErrorText = styled.span`
   margin-top: 6px;
   text-align: right;
   color: #ee2e4a;
+  font-style: italic;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
 const Error = ({ message, isVisible = false }) => (
-  <ErrorText isVisible={isVisible}>
+  <ErrorText aria-live="polite" isVisible={isVisible}>
     {message ?? 'This field is required'}
   </ErrorText>
 );
@@ -32,7 +33,7 @@ export const AddBookForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -40,6 +41,7 @@ export const AddBookForm = () => {
       await addBook(data);
       router.push('/');
     } catch (e) {
+      // TODO: Error UI
       console.log('Failed to add new book', e);
     }
   };
@@ -51,6 +53,7 @@ export const AddBookForm = () => {
         <Input
           id="title"
           name="title"
+          {...(errors.title && { 'aria-invalid': true })}
           {...register('title', { required: true })}
         />
         <Error isVisible={errors.title} />
@@ -61,6 +64,7 @@ export const AddBookForm = () => {
         <Input
           id="author"
           name="author"
+          {...(errors.title && { 'aria-invalid': true })}
           {...register('author', { required: true })}
         />
         <Error isVisible={errors.author} />
@@ -71,6 +75,7 @@ export const AddBookForm = () => {
         <Textarea
           id="description"
           name="description"
+          {...(errors.title && { 'aria-invalid': true })}
           {...register('description', { required: true })}
         />
         <Error isVisible={errors.description} />
@@ -83,6 +88,7 @@ export const AddBookForm = () => {
           name="imageUrl"
           // defaultValue="https://picsum.photos/125/200"
           placeholder="http://mydomain.com/image"
+          {...(errors.title && { 'aria-invalid': true })}
           {...register('imageUrl', {
             required: true,
             pattern: VALID_URL_PATTERN,
@@ -94,7 +100,9 @@ export const AddBookForm = () => {
         />
       </InputGroup>
 
-      <Button type="submit">Save</Button>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Saving...' : 'Save'}
+      </Button>
     </Form>
   );
 };

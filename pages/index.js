@@ -11,13 +11,22 @@ const BooksList = styled.ul`
   margin: unset;
 `;
 
+const Spinner = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export default function Home() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getBooks();
-      setBooks(data);
+      try {
+        const data = await getBooks();
+        setBooks(data);
+      } catch (e) {
+        console.log('Error fetching books', e);
+      }
     };
     getData();
   }, []);
@@ -31,19 +40,22 @@ export default function Home() {
     <>
       <Header>
         <Heading>Bookshelf</Heading>
-        <Link href="/books/add">
+        <Link href="/books/add" passHref>
           <Button role="link">Add Book</Button>
         </Link>
       </Header>
       <main>
-        {books.length > 0 ? (
+        {/* TODO: Add error / No books states */}
+        {books?.length > 0 ? (
           <BooksList>
             {books.map((book) => (
               <BookCard key={book.id} handleDelete={handleDelete} {...book} />
             ))}
           </BooksList>
         ) : (
-          <pre>Loading</pre>
+          <Spinner>
+            <span className="material-icons">cached</span>
+          </Spinner>
         )}
       </main>
     </>
